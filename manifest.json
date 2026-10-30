@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "simple ext",
+    "description": "a simple extension tool for my browser",
+    "version": "1.0",
+    "author": "@diluvii",
+    "action": {
+	"default_popup": "popup.html"
+    },
+    "icons": {
+	"16": "assets/icon.png",
+	"32": "assets/icon.png",
+	"48": "assets/icon.png",
+	"128": "assets/icon.png"
+    }
+}
