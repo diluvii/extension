@@ -36,8 +36,7 @@ function renderTask(asString) {
 	child.remove();
 	tasks.splice(index, 1);
 	localStorage.setItem("tasks", JSON.stringify(tasks));
-	num--;
-	if (num <= MAX_TASKS) {
+	if (tasks.length <= MAX_TASKS) {
 	    inputTextarea.disabled=false;
  	}
     });
@@ -72,8 +71,7 @@ inputTextarea.addEventListener('keypress', function (e) {
 	renderTask(text);
 	tasks.push(text);
 	localStorage.setItem("tasks", JSON.stringify(tasks));
-	num++;
-	if (num > MAX_TASKS) {
+	if (tasks.length > MAX_TASKS) {
 	    inputTextarea.disabled=true;
         }
     }
