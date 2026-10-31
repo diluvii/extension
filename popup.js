@@ -10,36 +10,48 @@ const tasks = JSON.parse(localStorage.getItem("tasks"));
 const tasksDiv = document.getElementById("tasks-div");
 const inputTextarea = document.getElementById("input-textarea");
 
+// render an additional task: create a div containing the task + an exit
+// button; add an event listener on the exit button to attend to clicks
+// (upon which we delete the task)
 function renderTask(asString) {
     const child = document.createElement('div');
     child.classList.add("task");
-    child.innerHTML = "<p>"+asString+"</p><button class='exit-button'>x</button>";
+
+    const p = document.createElement('p');
+    p.innerHTML = asString;
+
+    const button = document.createElement('button');
+    button.classList.add("exit-button");
+    button.innerHTML = "x";
+    button.addEventListener("click", function () {
+	const index = Array.from(tasksDiv.children).indexOf(child);
+	child.remove();
+	tasks.splice(index, 1);
+	localStorage.setItem("tasks", JSON.stringify(tasks));
+    });
+
+    child.append(p, button);
     tasksDiv.appendChild(child);
-}
+};
 
 
 const len = tasks.length;
 for (let i = 0; i < len; i++) {
     renderTask(tasks[i]);
-}
+};
 
 // allow for addition of tasks: put to local storage & re-render
 inputTextarea.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-	renderTask(inputTextarea.value);
-	tasks.push(inputTextarea.value);
+	e.preventDefault(); // avoid a stray newline left in the textbox
+	const text = inputTextarea.value.trim();
+	if (text === "") {
+	    inputTextarea.value = "";
+	    return;
+	};
+	renderTask(text);
+	tasks.push(text);
 	localStorage.setItem("tasks", JSON.stringify(tasks));
 	inputTextarea.value = "";
     }
 });
-
-// listen for clicks on exit buttons
-const exits = document.getElementsByClassName("exit-button");
-for (let i = 0; i < exits.length; i++) {
-    exits[i].addEventListener('click', function () {
-	exits[i].parentElement.remove();
-	tasks.splice(i, 1);
-	localStorage.setItem("tasks", JSON.stringify(tasks));
-    });
-};
-

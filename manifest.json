@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "simple ext",
+    "name": "orange 🍊",
     "description": "a simple extension tool for my browser",
     "version": "1.0",
     "author": "@diluvii",
@@ -8,9 +8,9 @@
 	"default_popup": "popup.html"
     },
     "icons": {
-	"16": "assets/icon.png",
-	"32": "assets/icon.png",
-	"48": "assets/icon.png",
-	"128": "assets/icon.png"
+	"16": "assets/icon16.png",
+	"32": "assets/icon32.png",
+	"48": "assets/icon48.png",
+	"128": "assets/icon128.png"
     }
 }

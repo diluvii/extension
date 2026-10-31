@@ -15,12 +15,18 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1em;
+    cursor: image-set(url("assets/cursor.png") 2x) 0 0, auto;
 }
 
 p, button, textarea {
     font-family: "DM Mono", monospace;
     font-size: 1em;
     margin: 0.25em 0 0.25em 0;
+    cursor: image-set(url("assets/cursor.png") 2x) 0 0, auto;
+}
+
+textarea:focus {
+    outline: none;
 }
 
 #tasks-div {
