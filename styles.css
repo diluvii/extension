@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 
 :root {
     --gray: #adbac6;
@@ -22,6 +22,10 @@ p, button, textarea {
     font-family: "DM Mono", monospace;
     font-size: 1em;
     margin: 0.25em 0 0.25em 0;
+    cursor: image-set(url("assets/cursor.png") 2x) 0 0, auto;
+}
+
+button:hover {
     cursor: image-set(url("assets/cursor.png") 2x) 0 0, auto;
 }
 

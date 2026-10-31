@@ -1,17 +1,22 @@
 // (i should probably use jquery but it has hideous syntax)
 //  TODO use setTimeout loop to add default tasks every midnight
-
 const MAX_TASKS = 16;
 
 if (localStorage.getItem("tasks") == null) {
     const defaultTasks = ["eat a fruit", "do 30 minutes of good work"];
     localStorage.setItem("tasks", JSON.stringify(defaultTasks));
 }
-const tasks = JSON.parse(localStorage.getItem("tasks"));
-let num = tasks.length;
+let tasks = JSON.parse(localStorage.getItem("tasks"));
 
 const tasksDiv = document.getElementById("tasks-div");
 const inputTextarea = document.getElementById("input-textarea");
+
+function renderAll() {
+    // render all tasks
+    for (let i = 0; i < tasks.length; i++) {
+	renderTask(tasks[i]);
+    }
+}
 
 // render an additional task: create a div containing the task + an exit
 // button; add an event listener on the exit button to attend to clicks
@@ -42,10 +47,7 @@ function renderTask(asString) {
 };
 
 
-const len = tasks.length;
-for (let i = 0; i < len; i++) {
-    renderTask(tasks[i]);
-};
+renderAll();
 
 // allow for addition of tasks: put to local storage & re-render
 inputTextarea.addEventListener('keypress', function (e) {
@@ -56,6 +58,17 @@ inputTextarea.addEventListener('keypress', function (e) {
 	    inputTextarea.value = "";
 	    return;
 	};
+	// handle commands
+	if (text[0] === '&') {
+	    if (parseCmd(text) === true) {
+		//inputTextarea.value = "";
+		return;
+	    } else {
+		inputTextarea.value = "";
+		return;
+	    };
+	};
+	inputTextarea.value = "";
 	renderTask(text);
 	tasks.push(text);
 	localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -63,6 +76,53 @@ inputTextarea.addEventListener('keypress', function (e) {
 	if (num > MAX_TASKS) {
 	    inputTextarea.disabled=true;
         }
-	inputTextarea.value = "";
     }
 });
+
+// handles commands (strings starting with '&'): if comand executes
+// successfully, return true; else return false
+//
+// TODO messy duplicate logic; fix! also validate parseInt results, etc.
+function parseCmd(text) {
+    const asArr = text.split(/\s+/);
+    const cmd = asArr[0];
+    const args = asArr.slice(1, asArr.length);
+    switch (cmd) {
+	case "&top": {
+	    if (args.length <= 0) {
+		return false;
+	    }
+	    let idx = parseInt(args[0]);
+	    if (idx < 0 || idx >= tasks.length) {
+		return false;
+	    }
+	    let tasksNew = [tasks[idx], ...tasks.slice(0, idx), ...tasks.slice(idx + 1),];
+	    tasks = tasksNew;
+	    localStorage.setItem("tasks", JSON.stringify(tasksNew));
+	    tasksDiv.innerHTML = "";
+	    renderAll();
+	    break;
+	}
+	case "&del": {
+	    if (args.length <= 0) {
+		return false;
+	    }
+	    let idx = parseInt(args[0]);
+            if (idx < 0 || idx >= tasks.length) {
+                return false;
+            }
+            let tasksNew = [...tasks.slice(0, idx), ...tasks.slice(idx + 1)];
+            tasks = tasksNew; 
+            localStorage.setItem("tasks", JSON.stringify(tasksNew));
+            tasksDiv.innerHTML = "";
+            renderAll();
+            break;
+	}
+	case "&count": {
+	    inputTextarea.value = (tasks.length).toString();
+	    break;
+	}
+	default:
+    };
+    return true;
+};
