@@ -1,0 +1,8 @@
+- for now, a simple to-do list with support for the following commands from the input text area:
+   - `&del [idx]` deletes the specified task
+   - `&top [idx]` moves the specified task to the top of the list; re-renders
+- data currently held in local storage
+- incoming:
+   - pomodoro timer
+   - garden of tomatos grown from the pomodoro timer
+   - a better icon
