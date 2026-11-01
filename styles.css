@@ -8,6 +8,7 @@ html {
     margin: 0;
     gap: 0;
     box-sizing: border-box;
+    cursor: image-set(url("assets/cursor.png") 2x) 0 0, auto;
 }
 
 body {

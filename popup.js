@@ -59,13 +59,9 @@ inputTextarea.addEventListener('keypress', function (e) {
 	};
 	// handle commands
 	if (text[0] === '&') {
-	    if (parseCmd(text) === true) {
-		//inputTextarea.value = "";
-		return;
-	    } else {
-		inputTextarea.value = "";
-		return;
-	    };
+	    inputTextarea.value = "";
+	    parseCmd(text);
+	    return;
 	};
 	inputTextarea.value = "";
 	renderTask(text);
@@ -117,7 +113,9 @@ function parseCmd(text) {
             break;
 	}
 	case "&count": {
-	    inputTextarea.value = (tasks.length).toString();
+	    let count = (tasks.length).toString();
+	    inputTextarea.value = count;
+	    console.log(count);
 	    break;
 	}
 	default:
